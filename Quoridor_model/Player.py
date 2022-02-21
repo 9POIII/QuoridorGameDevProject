@@ -1,8 +1,8 @@
 class Player:
 
-    def __init__(self, player_name):
+    def __init__(self, player_name="Greg", letter="E", number="1"):
         self.name = player_name
-        self.coordinates = ["E", "1"]
+        self.coordinates = [letter, number]
 
     def get_letter(self):
         return self.coordinates[0]

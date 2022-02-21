@@ -3,13 +3,13 @@ class Parser:
     wall_letter_dic = {"S": 0, "T": 1, "U": 2, "V": 3, "W": 4, "X": 5, "Y": 6, "Z": 7}
 
     @classmethod
-    def parse_player_letter(cls, letter):
+    def parse_player_letter(cls, letter) -> int:
         return cls.player_letter_dic[letter]
 
     @classmethod
-    def parse_wall_letter(cls, letter):
+    def parse_wall_letter(cls, letter) -> int:
         return cls.wall_letter_dic[letter]
 
     @staticmethod
-    def parse_number(number):
+    def parse_number(number) -> int:
         return int(number) - 1

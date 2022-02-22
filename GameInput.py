@@ -5,15 +5,22 @@ from Field import Field
 class InputFunc:
 
     def player_controller(self, rawInput):
-        letter = rawInput[5]
-        number = rawInput[6]
-        if rawInput[0] == 'm':
-            Q.move_player(letter, number)
-        elif rawInput[0] == 'j':
-            Q.jump_player(letter, number)
-        elif rawInput[0] == 'w':
-            Q.create_wall()
-
+        try:
+            letter = rawInput[5]
+            number = rawInput[6]
+        except:
+            print('error')
+            I.player_controller(rawInput=input("Your move: \n"))
+        else:
+            if rawInput[0] == 'm':
+                Q.move_player(letter, number)
+            elif rawInput[0] == 'j':
+                Q.jump_player(letter, number)
+            elif rawInput[0] == 'w':
+                Q.create_wall()
+            elif rawInput[0] != 'm' or 'j' or 'w':
+                print('error')
+                I.player_controller(rawInput=input("Your move: \n"))
 
     def player_choose(self, player_1, player_2):
         if player_1 == 'John':
@@ -32,7 +39,8 @@ class InputFunc:
             I.player_controller(rawInput = input("Your move: \n"))
 
         elif player_1 != 'John' or 'Smit':
-            print('error_2')
+            print('error')
+            I.player_choose(player_1=input("Please, select your player: John or Smit \n"), player_2='')
 
 
     def gamemode_choose(self, gamemode):
@@ -48,6 +56,7 @@ class InputFunc:
 
         elif self._gamemode != 'PvP' or 'PvE':
             print('error')
+            I.gamemode_choose(input("Please, select game mode: PvP or PvE \n"))
 
 F = Field()
 P = Player()

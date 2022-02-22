@@ -107,10 +107,13 @@ class Field:
             print("You don't have any other player near you!")
             return False
 
-    def check_access_create_wall(self, letter: str, number: str) -> bool:
+    def check_access_create_wall(self, letter: str, number: str, wall_counter: int) -> bool:
         center_position = [Parser.parse_number(number) + 1, Parser.parse_wall_letter(letter) + 1]
-        if self.wall_coordinates[center_position[0]][center_position[1]] == 0:
-            return True
+        if wall_counter != 10:
+            if self.wall_coordinates[center_position[0]][center_position[1]] == 0:
+                return True
+            else:
+                print("You can not create a wall on another wall!")
+                return False
         else:
-            print("You can not create a wall on another wall!")
-            return False
+            print("You have already placed all of your walls!")

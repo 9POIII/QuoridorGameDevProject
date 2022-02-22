@@ -42,12 +42,12 @@ class InputFunc:
 
     def player_choose(self, player_1:Player, player_2:Player):
         global viborIgroka
-        if viborIgroka == player_1.color:
+        if viborIgroka == player_1.color or 'white':
             print('You play by ' + viborIgroka)
             Q.set_players(player_1, player_2)
             I.player_controller(rawInput = input("Your move: \n"))
 
-        elif viborIgroka == player_2.color:
+        elif viborIgroka == player_2.color or 'black':
             print('You play by ' + viborIgroka)
             Q.set_players(player_2, player_1)
             I.player_controller(rawInput = input("Your move: \n"))
@@ -62,17 +62,17 @@ class InputFunc:
         global viborIgroka
         self._gamemode = gamemode
 
-        if self._gamemode == 'PvP':
+        if self._gamemode == 'PvP' or 'pvp':
             print('Its PvP')
             viborIgroka = input('Please, select player: White, Black \n')
             I.player_choose(self.player_1, self.player_2)
 
-        elif self._gamemode == 'PvE':
+        elif self._gamemode == 'PvE' or 'pve':
             print('Its PvE')
             viborIgroka = input('Please, select player: White, Black \n')
             I.player_choose(self.player_1, self.player_2)
 
-        elif self._gamemode != 'PvP' or 'PvE':
+        elif self._gamemode != 'PvP' or 'PvE' or 'pvp' or 'pve':
             print('error')
             I.gamemode_choose(input("Please, select game mode: PvP or PvE \n"))
 

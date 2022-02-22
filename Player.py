@@ -1,7 +1,7 @@
 class Player:
 
-    def __init__(self, player_name="Greg", letter="E", number="1"):
-        self.name = player_name
+    def __init__(self, player_color: str = "White", letter: str = "E", number: str = "1"):
+        self.color = player_color
         self.coordinates = [letter, number]
 
     def get_letter(self):
@@ -10,5 +10,5 @@ class Player:
     def get_number(self):
         return self.coordinates[1]
 
-    def change_coordinates(self, vertical_coordinate, horizontal_coordinate):
+    def change_coordinates(self, vertical_coordinate: str, horizontal_coordinate: str):
         self.coordinates = [vertical_coordinate, horizontal_coordinate]

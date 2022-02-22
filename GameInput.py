@@ -3,6 +3,11 @@ from Player import Player
 from Field import Field
 
 class InputFunc:
+    Q = Quoridor()
+    player_1 = Q.first_player
+    player_2 = Q.second_player
+    current_player = Q.current_player
+
 
     def player_controller(self, rawInput):
         try:
@@ -14,45 +19,58 @@ class InputFunc:
         else:
             if rawInput[0] == 'm':
                 Q.move_player(letter, number)
+                #print('You made a move on ' + letter + number)
+                I.player_controller(input("Your move: \n"))
+
             elif rawInput[0] == 'j':
                 Q.jump_player(letter, number)
+                #print('You made a jump on ' + letter + number)
+                I.player_controller(input("Your move: \n"))
+
             elif rawInput[0] == 'w':
-                Q.create_wall()
+                wallLetter = rawInput[5]
+                wallNumber = rawInput[6]
+                h_or_v = rawInput[7]
+                Q.create_wall(wallLetter, wallNumber, h_or_v)
+                I.player_controller(input("Your move: \n"))
+                #print('you put up a wall on ' + letter + number)
+
             elif rawInput[0] != 'm' or 'j' or 'w':
                 print('error')
                 I.player_controller(rawInput=input("Your move: \n"))
 
-    def player_choose(self, player_1, player_2):
-        if player_1 == 'John':
-            #player_1 = Player('John')
-            #player_2 = Player('Smit', "E", "9")
-            print('You play by John')
-            #Q.set_players(player_1, player_2)
+
+    def player_choose(self, player_1:Player, player_2:Player):
+        global viborIgroka
+        if viborIgroka == player_1.color:
+            print('You play by ' + viborIgroka)
+            Q.set_players(player_1, player_2)
             I.player_controller(rawInput = input("Your move: \n"))
 
-        elif player_1 == 'Smit':
-            #player_1 = Player('John')
-            #player_2 = Player('Smit', 'E', '9')
-            print('You play by Smit')
-            Q.switch_player()
-            #Q.set_players(player_2, player_1)
+        elif viborIgroka == player_2.color:
+            print('You play by ' + viborIgroka)
+            Q.set_players(player_2, player_1)
             I.player_controller(rawInput = input("Your move: \n"))
 
-        elif player_1 != 'John' or 'Smit':
+        elif viborIgroka != player_1.color or player_2.color:
             print('error')
-            I.player_choose(player_1=input("Please, select your player: John or Smit \n"), player_2='')
+            viborIgroka = player_1.color
+            I.player_choose(self.player_1, self.player_2)
 
 
     def gamemode_choose(self, gamemode):
+        global viborIgroka
         self._gamemode = gamemode
 
         if self._gamemode == 'PvP':
             print('Its PvP')
-            I.player_choose(player_1 = input("Please, select your player: John or Smit \n"), player_2= '')
+            viborIgroka = input('Please, select player: White, Black \n')
+            I.player_choose(self.player_1, self.player_2)
 
         elif self._gamemode == 'PvE':
             print('Its PvE')
-            I.player_choose(player_1 = input("Please, select your player: John or Smit \n"), player_2= '')
+            viborIgroka = input('Please, select player: White, Black \n')
+            I.player_choose(self.player_1, self.player_2)
 
         elif self._gamemode != 'PvP' or 'PvE':
             print('error')

@@ -3,8 +3,8 @@ from Field import Field
 
 
 class Quoridor:
-    first_player = Player("John")
-    second_player = Player("Smit", "E", "9")
+    first_player = Player("White")
+    second_player = Player("Black", "E", "9")
 
     current_player = Player()
     winner = Player()
@@ -21,7 +21,7 @@ class Quoridor:
         self.play_field.write_player_location(self.first_player.get_letter(), self.first_player.get_number())
         self.play_field.write_player_location(self.second_player.get_letter(), self.second_player.get_number())
 
-    def move_player(self, letter, number):
+    def move_player(self, letter: str, number: str):
         if self.play_field.check_access_move(self.current_player, letter, number):
             self.play_field.clean_player_location(self.current_player.get_letter(), self.current_player.get_number())
             self.current_player.change_coordinates(letter, number)
@@ -30,7 +30,7 @@ class Quoridor:
         else:
             print("Move is incorrect!")
 
-    def jump_player(self, letter, number):
+    def jump_player(self, letter: str, number: str):
         if self.play_field.check_access_jump(self.current_player, letter, number):
             self.play_field.clean_player_location(self.current_player.get_letter(), self.current_player.get_number())
             self.current_player.change_coordinates(letter, number)
@@ -39,8 +39,12 @@ class Quoridor:
         else:
             print("Jump is incorrect!")
 
-    def create_wall(self):
-        pass
+    def create_wall(self, letter: str, number: str, h_or_v: str):
+        if self.play_field.check_access_create_wall(letter, number):
+            self.play_field.write_wall_creation(letter, number, h_or_v)
+            Quoridor.switch_player(self)
+        else:
+            print("Wall creation is incorrect!")
 
     def check_end_game(self):
         pass

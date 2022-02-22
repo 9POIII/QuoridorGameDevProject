@@ -11,7 +11,7 @@ class Quoridor:
 
     play_field = Field()
 
-    def set_players(self, player_one, player_two):
+    def set_players(self, player_one: Player, player_two: Player):
         self.first_player = player_one
         self.second_player = player_two
 
@@ -26,13 +26,18 @@ class Quoridor:
             self.play_field.clean_player_location(self.current_player.get_letter(), self.current_player.get_number())
             self.current_player.change_coordinates(letter, number)
             self.play_field.write_player_location(self.current_player.get_letter(), self.current_player.get_number())
+            Quoridor.switch_player(self)
         else:
             print("Move is incorrect!")
 
     def jump_player(self, letter, number):
-        self.play_field.clean_player_location(self.current_player.get_letter(), self.current_player.get_number())
-        self.current_player.change_coordinates(letter, number)
-        self.play_field.write_player_location(self.current_player.get_letter(), self.current_player.get_number())
+        if self.play_field.check_access_jump(self.current_player, letter, number):
+            self.play_field.clean_player_location(self.current_player.get_letter(), self.current_player.get_number())
+            self.current_player.change_coordinates(letter, number)
+            self.play_field.write_player_location(self.current_player.get_letter(), self.current_player.get_number())
+            Quoridor.switch_player(self)
+        else:
+            print("Jump is incorrect!")
 
     def create_wall(self):
         pass

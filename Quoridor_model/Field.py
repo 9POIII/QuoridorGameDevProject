@@ -81,3 +81,7 @@ class Field:
         else:
             print("Position is too far!")
             return False
+
+    def check_access_jump(self, player: Player, letter, number) -> bool:
+        player_position = [Parser.parse_number(player.get_number()), Parser.parse_player_letter(player.get_letter())]
+        moving_position = [Parser.parse_number(number), Parser.parse_player_letter(letter)]

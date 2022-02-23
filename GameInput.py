@@ -14,37 +14,40 @@ class InputFunc:
         if rawInput.lower() == 'restart':
             Q.start_game()
             I.gamemode_choose(input("Please, select game mode: PvP or PvE \n"))
+
         else:
-            try:
-                letter = rawInput[5]
-                number = rawInput[6]
-            except:
-                print('error')
-                I.player_controller(input("Your move: \n"))
-            else:
-                if rawInput[0].lower() == 'm':
-                    Q.move_player(letter, number)
-                    print('player placement: ' + str(Q.first_player.coordinates))
-                    print('player placement: ' + str(Q.second_player.coordinates))
-                    I.player_controller(input("Your move: \n"))
-
-                elif rawInput[0].lower() == 'j':
-                    Q.jump_player(letter, number)
-                    print('player placement: ' + str(Q.first_player.coordinates))
-                    print('player placement: ' + str(Q.second_player.coordinates))
-                    I.player_controller(input("Your move: \n"))
-
-                elif rawInput[0].lower() == 'w':
-                    wallLetter = rawInput[5]
-                    wallNumber = rawInput[6]
-                    h_or_v = rawInput[7]
-                    Q.create_wall(wallLetter, wallNumber, h_or_v)
-                    I.player_controller(input("Your move: \n"))
-
-                elif rawInput[0].lower() != 'm' or rawInput[0].lower() != 'j' or rawInput[0].lower() != 'w':
+            if Q.is_ended == False:
+                try:
+                    letter = rawInput[5]
+                    number = rawInput[6]
+                except:
                     print('error')
-                    I.player_controller(rawInput = input("Your move: \n"))
+                    I.player_controller(input("Your move: \n"))
+                else:
+                    if rawInput[0].lower() == 'm':
+                        Q.move_player(letter, number)
+                        print(Q.first_player.color + ' player placement: ' + str(Q.first_player.coordinates))
+                        print(Q.second_player.color + ' player placement: ' + str(Q.second_player.coordinates))
+                        I.player_controller(input("Your move: \n"))
 
+                    elif rawInput[0].lower() == 'j':
+                        Q.jump_player(letter, number)
+                        print('player placement: ' + str(Q.first_player.coordinates))
+                        print('player placement: ' + str(Q.second_player.coordinates))
+                        I.player_controller(input("Your move: \n"))
+
+                    elif rawInput[0].lower() == 'w':
+                        wallLetter = rawInput[5]
+                        wallNumber = rawInput[6]
+                        h_or_v = rawInput[7]
+                        Q.create_wall(wallLetter, wallNumber, h_or_v)
+                        I.player_controller(input("Your move: \n"))
+
+                    elif rawInput[0].lower() != 'm' or rawInput[0].lower() != 'j' or rawInput[0].lower() != 'w':
+                        print('error')
+                        I.player_controller(rawInput = input("Your move: \n"))
+            elif Q.is_ended == True:
+                print('Game winner: ' + str(Q.winner.color))
 
 
     def player_choose(self, player_1:Player, player_2:Player):
@@ -69,7 +72,6 @@ class InputFunc:
         global viborIgroka
         player_1 = Q.first_player
         player_2 = Q.second_player
-        #self._gamemode = gamemode
 
         if gamemode.lower() == 'pvp':
             print('Its PvP')

@@ -33,6 +33,7 @@ class Quoridor:
                 self.current_player.change_coordinates(letter, number)
                 self.play_field.write_player_location(self.current_player.get_letter(), self.current_player.get_number())
                 Quoridor.switch_player(self)
+                Quoridor.check_end_game(self)
             else:
                 print("Move is incorrect!")
         else:
@@ -45,6 +46,7 @@ class Quoridor:
                 self.current_player.change_coordinates(letter, number)
                 self.play_field.write_player_location(self.current_player.get_letter(), self.current_player.get_number())
                 Quoridor.switch_player(self)
+                Quoridor.check_end_game(self)
             else:
                 print("Jump is incorrect!")
         else:

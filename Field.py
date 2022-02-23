@@ -96,21 +96,120 @@ class Field:
         player_position = [Parser.parse_number(player.get_number()), Parser.parse_player_letter(player.get_letter())]
         moving_position = [Parser.parse_number(number), Parser.parse_player_letter(letter)]
         if self.player_coordinates[player_position[0] + 1][player_position[1]] == 1:
-            return True
+            if self.wall_coordinates[player_position[0] + 2][player_position[1]] == 0 or \
+                    self.wall_coordinates[player_position[0] + 2][player_position[1] + 1] == 0:
+                if player_position[0] + 2 != moving_position[0] and player_position[1] != moving_position[1]:
+                    print("You must jump through a player if position is free!")
+                    return False
+                else:
+                    return True
+            else:
+                if player_position[0] + 1 == moving_position[0] and player_position[1] + 1 == moving_position[1]:
+                    if self.wall_coordinates[moving_position[0]][moving_position[1]] == 1 and \
+                            self.wall_coordinates[moving_position[0] + 1][moving_position[1]] == 1:
+                        print("You can not jump through a wall!")
+                        return False
+                    else:
+                        return True
+                elif player_position[0] + 1 == moving_position[0] and player_position[1] - 1 == moving_position[1]:
+                    if self.wall_coordinates[moving_position[0]][moving_position[1] + 1] and \
+                            self.wall_coordinates[moving_position[0] + 1][moving_position[1] + 1]:
+                        print("You can not jump through a wall!")
+                        return False
+                    else:
+                        return True
+                else:
+                    print("Position is not near another player!")
+                    return False
         elif self.player_coordinates[player_position[0] - 1][player_position[1]] == 1:
-            return True
+            if self.wall_coordinates[player_position[0] - 1][player_position[1]] == 0 or \
+                    self.wall_coordinates[player_position[0] - 1][player_position[1] + 1] == 0:
+                if player_position[0] - 2 != moving_position[0] and player_position[1] != moving_position[1]:
+                    print("You must jump through a player if position is free!")
+                    return False
+                else:
+                    return True
+            else:
+                if player_position[0] - 1 == moving_position[0] and player_position[1] + 1 == moving_position[1]:
+                    if self.wall_coordinates[moving_position[0]][moving_position[1]] == 1 and \
+                            self.wall_coordinates[moving_position[0] + 1][moving_position[1]] == 1:
+                        print("You can not jump through a wall!")
+                        return False
+                    else:
+                        return True
+                elif player_position[0] - 1 == moving_position[0] and player_position[1] - 1 == moving_position[1]:
+                    if self.wall_coordinates[moving_position[0]][moving_position[1] + 1] and \
+                            self.wall_coordinates[moving_position[0] + 1][moving_position[1] + 1]:
+                        print("You can not jump through a wall!")
+                        return False
+                    else:
+                        return True
+                else:
+                    print("Position is not near another player!")
+                    return False
         elif self.player_coordinates[player_position[0]][player_position[1] + 1] == 1:
-            return True
+            if self.wall_coordinates[player_position[0]][player_position[1] + 2] == 0 or \
+                    self.wall_coordinates[player_position[0] + 1][player_position[1] + 2] == 0:
+                if player_position[0] != moving_position[0] and player_position[1] + 2 != moving_position[1]:
+                    print("You must jump through a player if position is free!")
+                    return False
+                else:
+                    return True
+            else:
+                if player_position[0] + 1 == moving_position[0] and player_position[1] + 1 == moving_position[1]:
+                    if self.wall_coordinates[moving_position[0]][moving_position[1]] == 1 and \
+                            self.wall_coordinates[moving_position[0]][moving_position[1] + 1] == 1:
+                        print("You can not jump through a wall!")
+                        return False
+                    else:
+                        return True
+                elif player_position[0] - 1 == moving_position[0] and player_position[1] + 1 == moving_position[1]:
+                    if self.wall_coordinates[moving_position[0] + 1][moving_position[1]] and \
+                            self.wall_coordinates[moving_position[0] + 1][moving_position[1] + 1]:
+                        print("You can not jump through a wall!")
+                        return False
+                    else:
+                        return True
+                else:
+                    print("Position is not near another player!")
+                    return False
         elif self.player_coordinates[player_position[0]][player_position[1] - 1] == 1:
-            return True
+            if self.wall_coordinates[player_position[0]][player_position[1] - 1] == 0 or \
+                    self.wall_coordinates[player_position[0] + 1][player_position[1] - 1] == 0:
+                if player_position[0] != moving_position[0] and player_position[1] - 2 != moving_position[1]:
+                    print("You must jump through a player if position is free!")
+                    return False
+                else:
+                    return True
+            else:
+                if player_position[0] + 1 == moving_position[0] and player_position[1] - 1 == moving_position[1]:
+                    if self.wall_coordinates[moving_position[0]][moving_position[1]] == 1 and \
+                            self.wall_coordinates[moving_position[0]][moving_position[1] + 1] == 1:
+                        print("You can not jump through a wall!")
+                        return False
+                    else:
+                        return True
+                elif player_position[0] - 1 == moving_position[0] and player_position[1] - 1 == moving_position[1]:
+                    if self.wall_coordinates[moving_position[0] + 1][moving_position[1]] and \
+                            self.wall_coordinates[moving_position[0] + 1][moving_position[1] + 1]:
+                        print("You can not jump through a wall!")
+                        return False
+                    else:
+                        return True
+                else:
+                    print("Position is not near another player!")
+                    return False
         else:
             print("You don't have any other player near you!")
             return False
 
-    def check_access_create_wall(self, letter: str, number: str) -> bool:
+    def check_access_create_wall(self, letter: str, number: str, wall_counter: int) -> bool:
         center_position = [Parser.parse_number(number) + 1, Parser.parse_wall_letter(letter) + 1]
-        if self.wall_coordinates[center_position[0]][center_position[1]] == 0:
-            return True
+        if wall_counter != 10:
+            if self.wall_coordinates[center_position[0]][center_position[1]] == 0:
+                return True
+            else:
+                print("You can not create a wall on another wall!")
+                return False
         else:
-            print("You can not create a wall on another wall!")
-            return False
+            print("You have already placed all of your walls!")

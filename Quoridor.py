@@ -19,8 +19,8 @@ class Quoridor:
 
     def start_game(self):
         self.is_ended = False
-        #self.first_player = Player("White")
-        #self.second_player = Player("Black", "E", "9")
+        self.first_player = Player("White")
+        self.second_player = Player("Black", "E", "9")
         self.play_field = Field()
         self.current_player = self.first_player
         self.play_field.write_player_location(self.first_player.get_letter(), self.first_player.get_number())
@@ -72,9 +72,12 @@ class Quoridor:
     def end_game(self, winner: Player):
         self.winner = winner
         self.is_ended = True
+        print("Congratulations! "+winner.color+" player has won!")
 
     def switch_player(self):
-        if self.current_player == self.first_player:
+        if self.current_player.color == self.first_player.color:
+            self.first_player = self.current_player
             self.current_player = self.second_player
         else:
+            self.second_player = self.current_player
             self.current_player = self.first_player
